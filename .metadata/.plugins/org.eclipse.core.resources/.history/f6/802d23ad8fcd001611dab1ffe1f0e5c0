@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Solution1 {
+	
+	public List<Integer> GetSum (List<Integer> A, int k) {
+		List<Integer> result = new ArrayList<Integer>();
+		if (A == null || A.size() < k || k <= 0) {
+			return result;
+		}
+		int count = 0;
+		for (int i = 0; i < A.size(); i++) {
+			count++;
+			if (count >= k) {
+				int sum = 0;
+				for (int j = i; j >= i - k + 1; j--) {
+					sum += A.get(j);
+				}
+				result.add(sum);
+			}
+		}
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

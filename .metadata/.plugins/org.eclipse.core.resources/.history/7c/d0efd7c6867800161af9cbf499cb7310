@@ -1,0 +1,103 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+public class DecisionTree {
+
+	public ArrayList<ArrayList<String>> getData(String filePath) {
+		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+		try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //whether file exist or not
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+                BufferedReader bufferedReader = new BufferedReader(read);
+                int lineNum = 0;
+                String linetxt = null;
+                while((linetxt = bufferedReader.readLine()) != null) {
+                	if (lineNum != 0 && lineNum != 1) {
+                		ArrayList<String> listtmp = new ArrayList<String>(Arrays.asList(linetxt.split(":|;")));
+                		ArrayList<String> list = new ArrayList<String>(Arrays.asList(listtmp.get(1).split(",")));
+                		res.add(list);
+                		
+                	}
+                	lineNum++;
+                }
+                /*
+                for (ArrayList<String> list : res) {
+                	for (String s : list) {
+                		System.out.print(s);
+                	}
+                	System.out.println();
+                	System.out.println();
+                }
+                */
+                read.close();
+    }else{
+        System.out.println("cannot find file");
+    }
+    } catch (Exception e) {
+        System.out.println("error when read file");
+        e.printStackTrace();
+    }
+		return res;
+	}
+	
+	public ArrayList<String> getAttribute(String filePath) {
+		ArrayList<String> attribute = new ArrayList<String>();
+		try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //whether file exist or not
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String linetxt = null;
+                if ((linetxt = bufferedReader.readLine()) != null) {
+                	String tmp = linetxt.substring(1, linetxt.length() - 1);
+                	attribute = new ArrayList<String>(Arrays.asList(tmp.split(", ")));
+                }
+//                for (String s : attribute) {
+//                	System.out.println(s);
+//                }
+                read.close();
+    }else{
+        System.out.println("cannot find file");
+    }
+    } catch (Exception e) {
+        System.out.println("error when read file");
+        e.printStackTrace();
+    }
+		return attribute;
+	}
+	
+	public double calEntropy(ArrayList<ArrayList<String>> data) {
+		int rowNum = data.size();
+		int n = data.get(0).size() - 1;
+		HashMap<String, Integer> count = new HashMap<String, Integer>();
+		for (ArrayList<String> lineData : data) {
+			if (count.containsKey(lineData.get(n))) {
+				count.put(lineData.get(n), 0);
+			}
+			count.put(lineData.get(n), count.get(lineData.get(n)) + 1);
+		}
+		double entropy = 0;
+		for (String key : count.keySet() ) {
+			entropy -= count.get(key)/rowNum * Math.log(count.get(key)/rowNum) / Math.log(2);
+		}
+		return entropy;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String filePath = "/Users/renyi/Documents/workspace/INF552HW1V1/dt-data.txt";
+//      "res/";
+		DecisionTree decisiontree = new DecisionTree();
+        decisiontree.getData(filePath);
+        decisiontree.getAttribute(filePath);
+	}
+
+}

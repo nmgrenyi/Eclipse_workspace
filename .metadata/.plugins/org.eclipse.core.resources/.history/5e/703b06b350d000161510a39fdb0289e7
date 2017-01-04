@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Rectangle {
+	Point leftTop;
+	Point bottomRight;
+	public Rectangle (Point leftTop, Point bottomRight) {
+		this.leftTop = leftTop;
+		this.bottomRight = bottomRight;
+	}
+}
+
+class Point {
+	int x, y;
+	public Point (int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+public class Solution2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

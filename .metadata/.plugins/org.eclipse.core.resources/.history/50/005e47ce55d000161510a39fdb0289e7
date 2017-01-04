@@ -1,0 +1,15 @@
+import java.util.*;
+
+public class Solution2 {
+
+	public static List<Integer> windowSum(int[] array, int k) {
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] array = {1,1,1,1,1,1,1,1,1};
+		System.out.println(windowSum(array, 3));
+
+	}
+
+}

@@ -1,0 +1,13 @@
+import java.util.ArrayList;
+
+public class DecisionTree {
+
+	public ArrayList<ArrayList<String>> getData() {
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

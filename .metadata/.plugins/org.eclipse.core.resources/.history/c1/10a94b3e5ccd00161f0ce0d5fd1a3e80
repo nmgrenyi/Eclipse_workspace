@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Point {
+	double x;
+	double y;
+	public Point (double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class Solution1 {
+	
+	public Point[] Solution (Point[] array, Point origin, int k) {
+		Point[] rvalue = new Point[k];
+		int index = 0;
+		PriorityQueue<Point> pq = new PriorityQueue<Point> (k+1, new Comparator<Point>())
+		return rvalue;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

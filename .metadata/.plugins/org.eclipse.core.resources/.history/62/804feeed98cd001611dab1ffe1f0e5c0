@@ -1,0 +1,35 @@
+
+class Point {
+	double x;
+	double y;
+	public Point (double x, double y){
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class doOverLap {
+	
+	public boolean doOverlap (Point topLeftA, Point topLeftB, Point bottomRightA, Point bottomRightB) {
+		//A above B or B above A
+		if (bottomRightA.y >= topLeftB.y || bottomRightB.y >= topLeftA.y ) {
+			return false;
+		}
+		//A to the left of B or B to the left of A
+		if (bottomRightA.x <= topLeftB.x || bottomRightB.x <= topLeftA.x) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		doOverLap dooverlap = new doOverLap();
+		Point topLeftA = new Point(0, 1.5);
+		Point bottomRightA = new Point(1.5, 0);
+		Point topLeftB = new Point(1, 2);
+		Point bottomRightB = new Point(2, 1);
+		System.out.println(dooverlap.doOverlap(topLeftA, topLeftB, bottomRightA, bottomRightB));
+	}
+
+}

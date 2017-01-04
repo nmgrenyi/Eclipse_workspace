@@ -1,0 +1,23 @@
+
+class Point {
+	double x;
+	double y;
+	public Point (double x, double y){
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class doOverLap {
+	
+	public boolean doOverlap (Point topLeftA, Point topLeftB, Point bottomDownA, Point bottomDownB) {
+		
+		return true;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

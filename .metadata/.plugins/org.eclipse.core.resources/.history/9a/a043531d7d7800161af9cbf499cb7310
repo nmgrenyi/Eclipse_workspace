@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class DecisionTree {
+
+	public ArrayList<ArrayList<String>> getData(String filePath) {
+		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+		try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //whether file exist or not
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);//考虑到编码格式
+                BufferedReader bufferedReader = new BufferedReader(read);
+                
+                int lineNum = 0;
+                String linetxt = null;
+                while((linetxt = bufferedReader.readLine()) != null) {
+                	if (lineNum != 0 && lineNum != 1) {
+                		ArrayList<String> listtmp = new ArrayList<String>(Arrays.asList(linetxt.split(":|;")));
+                		ArrayList<String> list = new ArrayList<String>(Arrays.asList(listtmp.get(1).split(",")));
+                		res.add(list);
+                		
+                	}
+                	lineNum++;
+                }
+                /*
+                for (ArrayList<String> list : res) {
+                	for (String s : list) {
+                		System.out.print(s);
+                	}
+                	System.out.println();
+                	System.out.println();
+                }
+                */
+                read.close();
+    }else{
+        System.out.println("找不到指定的文件");
+    }
+    } catch (Exception e) {
+        System.out.println("读取文件内容出错");
+        e.printStackTrace();
+    }
+		return res;
+	}
+	
+	public ArrayList<String> getAttribute(String filePath) {
+		ArrayList<String> attribute = new ArrayList<String>();
+		try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //whether file exist or not
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);//考虑到编码格式
+                BufferedReader bufferedReader = new BufferedReader(read);
+                
+                int lineNum = 0;
+                String linetxt = null;
+                if ((linetxt = bufferedReader.readLine()) != null) {
+                	ArrayList<String> listtmp = new ArrayList<String>(Arrays.asList(linetxt.split("(|)")));
+                	attribute = new ArrayList<String>(Arrays.asList(listtmp.get(2).split(",")));
+                }
+                
+                
+                for (String s : attribute) {
+                	System.out.print(s);
+                }
+                read.close();
+    }else{
+        System.out.println("找不到指定的文件");
+    }
+    } catch (Exception e) {
+        System.out.println("读取文件内容出错");
+        e.printStackTrace();
+    }
+		return attribute;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String filePath = "/Users/renyi/Documents/workspace/INF552HW1V1/dt-data.txt";
+//      "res/";
+		DecisionTree decisiontree = new DecisionTree();
+        decisiontree.getData(filePath);
+        decisiontree.getAttribute(filePath);
+	}
+
+}

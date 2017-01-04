@@ -1,0 +1,18 @@
+import java.util.*;
+
+class Rectangle {
+	Point leftTop;
+	Point bottomRight;
+	public Rectangle (leftTop, bottomRight) {
+		this.leftTop = leftTop;
+		this.bottomRight = bottomRight;
+	}
+}
+public class Solution2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,54 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class DecisionTree {
+
+	public ArrayList<ArrayList<String>> getData(String filePath) {
+		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+		try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){ //判断文件是否存在
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);//考虑到编码格式
+                BufferedReader bufferedReader = new BufferedReader(read);
+                
+                int lineNum = 0;
+                String linetxt = null;
+                while((linetxt = bufferedReader.readLine()) != null) {
+                	if (lineNum != 0) {
+                		ArrayList<String> listtmp = new ArrayList<String>(Arrays.asList(linetxt.split(":")));
+                		ArrayList<String> list = new ArrayList<String>(Arrays.asList(listtmp.get(1).split(",")));
+                		//ArrayList<String> listtmp = Arrays.linetxt.split(":");
+                		//list = listtmp.get(1).split(",")
+                		
+                	}
+                	lineNum++;
+                }
+                
+                String lineTxt = null;
+                while((lineTxt = bufferedReader.readLine()) != null){
+                    System.out.println(lineTxt);
+                }
+                read.close();
+    }else{
+        System.out.println("找不到指定的文件");
+    }
+    } catch (Exception e) {
+        System.out.println("读取文件内容出错");
+        e.printStackTrace();
+    }
+		return res;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String filePath = "/Users/renyi/Documents/workspace/INF552HW1V1/dt-data.txt";
+//      "res/";
+		DecisionTree decisiontree = new DecisionTree();
+        decisiontree.getData(filePath);
+	}
+
+}
