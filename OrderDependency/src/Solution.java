@@ -23,13 +23,14 @@ public class Solution {
 		List<Order> result = new ArrayList<>();
 		//接下来所有的key都保持的是string， orderName， 这样直接避免重复输出
 		//计算入度
-		Map<String, Integer> inMap = new HashMap<>();
+		//Map<String, Integer> inMap = new HashMap<>();
+		Map<Order, Integer> inMap = new HashMap<>();
 		//计算出度，就是一个Order指着多少个其他的Order
-		Map<String, List<String>> outMap = new HashMap<>();
+		Map<Order, List<Order>> outMap = new HashMap<>();
 		//这个负责记录，记录orderName和Order的关系
-		Map<String, Order> recordMap = new HashMap<>();
+		//Map<String, Order> recordMap = new HashMap<>();
 		//这个负责去掉重复
-		Set<String> set = new HashSet<>();
+		//Set<String> set = new HashSet<>();
 		
 		//下面开始吧硅胶填入到这些map或者是set里面，使其丰满
 		//这里注意要仔细就行，别漏东西
@@ -38,9 +39,10 @@ public class Solution {
 			Order cur = od.cur;
 			String preName = pre.orderName;
 			String curName = cur.orderName;
-			set.add(preName);
-			set.add(curName);
+			//set.add(preName);
+			//set.add(curName);
 			
+			/*
 			//先㩙好string和Order的map
 			if (!recordMap.containsKey(preName)) {
 				recordMap.put(preName, pre);
@@ -48,34 +50,35 @@ public class Solution {
 			if (!recordMap.containsKey(curName)) {
 				recordMap.put(curName, cur);
 			}
+			*/
 			
 			//先做好入度
-			if (!inMap.containsKey(preName)) {
-				inMap.put(preName, 0);
+			if (!inMap.containsKey(pre)) {
+				inMap.put(pre, 0);
 			}
 			if (inMap.containsKey(curName)) {
-				inMap.put(curName, inMap.get(curName) + 1);
+				inMap.put(cur, inMap.get(curName) + 1);
 			}
 			else {
-				inMap.put(curName, 1);
+				inMap.put(cur, 1);
 			}
 			
 			//再做一下出度
-			List<String> temp = new ArrayList<>();
-			if (outMap.containsKey(preName)) {
-				temp = outMap.get(preName);
+			List<Order> temp = new ArrayList<>();
+			if (outMap.containsKey(pre)) {
+				temp = outMap.get(pre);
 			}
-			temp.add(curName);
-			outMap.put(preName, temp);
+			temp.add(cur);
+			outMap.put(pre, temp);
 			//这里得加个空表，否则后面的null会报错的
-			if (!outMap.containsKey(curName)) {
-				outMap.put(curName, new ArrayList<>());
+			if (!outMap.containsKey(cur)) {
+				outMap.put(cur, new ArrayList<>());
 			}
 		}
 		
 		//一路BFS剥洋葱，每层都挑入度为0的string
-		Queue<String> queue = new LinkedList<>();
-		for (String str : inMap.keySet()) {
+		Queue<Order> queue = new LinkedList<>();
+		for (Order str : inMap.keySet()) {
 			int inDegree = inMap.get(str);
 			if (inDegree == 0) {
 				queue.offer(str);
@@ -83,10 +86,11 @@ public class Solution {
 		}
 		
 		while (!queue.isEmpty()) {
-			String top = queue.poll();
-			result.add(recordMap.get(top));
-			List<String> outList = outMap.get(top);
-			for (String next : outList) {
+			Order top = queue.poll();
+			//result.add(recordMap.get(top));
+			result.add(top);
+			List<Order> outList = outMap.get(top);
+			for (Order next : outList) {
 				inMap.put(next, inMap.get(next) - 1);
 				if (inMap.get(next) == 0) {
 					queue.offer(next);
@@ -94,13 +98,16 @@ public class Solution {
 			}
 		}
 		
+		/*
 		if (set.size() != result.size()) {
 			return null;
 		}
+		*/
 		
 		return result;
 	}
 	
+	/*
 	public List<Order> GetOrderList (List<OrderDependency> OrderDependencies) {
 	    List<Order> result = new ArrayList<Order>();
 	    HashMap<String, Integer> inMap = new HashMap<String, Integer>();
@@ -177,6 +184,7 @@ public class Solution {
 	    }
 	    return result;
 	}
+	*/
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -207,7 +215,8 @@ public class Solution {
 		list.add(od7);
 		Solution sls = new Solution();
 		//List<Order> res = sls.solution(list);
-		List<Order> res = sls.GetOrderList(list);
+		//List<Order> res = sls.GetOrderList(list);
+		List<Order> res = solution(list);
 		for (int i = 0; i < res.size(); i++) {
 			System.out.println(res.get(i).orderName);
 			if (i + 1 < res.size()) {

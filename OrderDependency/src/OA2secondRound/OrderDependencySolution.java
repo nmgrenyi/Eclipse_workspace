@@ -1,7 +1,6 @@
 package OA2secondRound;
 
 import java.util.*;
-
 class Order {
 	String order = "";
 	public Order(String order) {
@@ -18,6 +17,7 @@ class OrderDependency {
 }
 
 public class OrderDependencySolution {
+	
 	public List<Order> getOrderList(List<OrderDependency> orders) {
 		// write your code here
 		List<Order> res = new ArrayList<>();
@@ -92,6 +92,74 @@ public class OrderDependencySolution {
 		return res;
 		
 	}
+	
+	/*
+	public List<Order> getOrderList(List<OrderDependency> orders) {
+		List<Order> res = new ArrayList<>();
+		if (orders == null || orders.size() == 0) {
+			return res;
+		}
+		HashMap<String, Integer> inMap = new HashMap<>();
+		HashMap<String, List<String>> outMap = new HashMap<>();
+		HashMap<String, Order> recordMap = new HashMap<>();
+		Set<String> set = new HashSet<>();
+		for (OrderDependency od : orders) {
+			Order pre = od.depend;
+			Order cur = od.current;
+			String preName = pre.order;
+			String curName = cur.order;
+			set.add(preName);
+			set.add(curName);
+			
+			//inMap
+			if (!inMap.containsKey(preName)) {
+				inMap.put(preName, 0);
+			}
+			if (!inMap.containsKey(curName)) {
+				inMap.put(curName, 1);
+			}
+			else {
+				inMap.put(curName, inMap.get(curName) + 1);
+			}
+			
+			//outMap
+			if (!outMap.containsKey(curName)) {
+				outMap.put(curName, new ArrayList<String>());
+			}
+			if (!outMap.containsKey(preName)) {
+				outMap.put(preName, new ArrayList<String>());
+			}
+			outMap.get(preName).add(curName);
+			
+			//recordMap
+			if (!recordMap.containsKey(preName)) {
+				recordMap.put(preName, pre);
+			}
+			if (!recordMap.containsKey(curName)) {
+				recordMap.put(curName, cur);
+			}
+		}
+		Queue<String> queue = new LinkedList<String>();
+		for (String str : inMap.keySet()) {
+			if (inMap.get(str) == 0) {
+				queue.offer(str);
+			}
+		}
+		
+		while (queue.size() != 0) {
+			String temp = queue.poll();
+			res.add(recordMap.get(temp));
+			set.remove(temp);
+			for (String next : outMap.get(temp)) {
+				inMap.put(next, inMap.get(next) - 1);
+				if (inMap.get(next) == 0 && set.contains(next)) {
+					queue.offer(next);
+				}
+			}
+		}
+		return res;
+	}
+	*/
 	
 	public static void main(String[] argc) {
 		OrderDependencySolution solution = new OrderDependencySolution();

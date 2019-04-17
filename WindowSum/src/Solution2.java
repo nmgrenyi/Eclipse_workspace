@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Solution2 {
+public class Solution2 {//WinSum
 	/*
 	public static List<Integer> windowSum(int[] array, int k) {
 		List<Integer> res = new ArrayList<>();
@@ -22,13 +22,10 @@ public class Solution2 {
 	
 	public static List<Integer> windowSum(int[] array, int k) {
 		List<Integer> res = new ArrayList<>();
-		if (array == null) {
-			return null;
+		if (array == null || array.length == 0 || k <= 0) {
+			return res;//如果输入list为null或者为空，或者winSum《= 0， 就返回一个空list
 		}
-		if (k > array.length) {
-			return res;
-		}
-		if (k <= 0) {
+		if (k >= array.length) {
 			return res;
 		}
 		int curSum = 0;

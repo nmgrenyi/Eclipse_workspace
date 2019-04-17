@@ -14,6 +14,7 @@ class Connection {
 }
 
 public class MinimumSpanningTree {
+	
 	class sort_connections implements Comparator<Connection>{
 		public int compare(Connection c1, Connection c2) {
 			return c2.cost - c1.cost;
@@ -32,13 +33,9 @@ public class MinimumSpanningTree {
 	}
 	
 	public ArrayList<Connection> getLowCost(ArrayList<Connection> connections) {
-		// write your code here
 		ArrayList<Connection> res = new ArrayList<>();
-		if (connections == null) {
-			return null;
-		}
-		if (connections.size() == 0) {
-			return null;
+		if (connections == null || connections.size() == 0) {
+			return res;//如果输入有问题，input的arraylist为null或者为空，返回空的arraylist
 		}
 		int numberOfCityInConnections = numberOfCity(connections);
 		ArrayList<String> cityTree = new ArrayList<>();
@@ -55,10 +52,9 @@ public class MinimumSpanningTree {
 		}
 		res.sort(new Cmp());
 		if (numberOfCityInConnections != numberOfCity(res)) {
-			return null;
+			return null;//如果无法生成MST，返回null
 		}
 		return res;
-		
 	}
 	
 	public Connection findMin (ArrayList<Connection> connections, ArrayList<String> cityTree) {
@@ -83,6 +79,73 @@ public class MinimumSpanningTree {
 		}
 		return set.size();
 	}
+	/*
+	class Comparator1 implements Comparator<Connection>{
+		public int compare(Connection c1, Connection c2) {
+			return c2.cost - c1.cost;
+		}
+	}
+
+	class Comparator2 implements Comparator<Connection>{
+		public int compare (Connection c1, Connection c2) {
+			if (c1.node1.equals(c2.node1)) {
+				return c1.node2.compareTo(c2.node2);
+			}
+			else {
+				return c1.node1.compareTo(c2.node1);
+			}
+		}
+	}
+	public ArrayList<Connection> getLowCost (ArrayList<Connection> connections) {
+		ArrayList<Connection> res = new ArrayList<>();
+		if (connections == null || connections.size() == 0) {
+			return null;
+			//return res;
+		}
+		ArrayList<String> cityTree = new ArrayList<>();
+		Comparator1 cmp1 = new Comparator1();
+		Collections.sort(connections, cmp1);
+		int numberOfCities = numberOfCities(connections);
+		while(connections.size() != 0) {
+			Connection temp = findMin(connections, cityTree);
+			if (temp == null) {
+				break;
+			}
+			cityTree.add(temp.node1);
+			cityTree.add(temp.node2);
+			connections.remove(temp);
+			res.add(temp);
+		}
+		if (numberOfCities != numberOfCities(res)) {
+			return null;
+		}
+		Comparator2 cmp2 = new Comparator2();
+		Collections.sort(res, cmp2);
+		return res;
+	}
+
+	public Connection findMin(ArrayList<Connection> connections, ArrayList<String> cityTree) {
+		Connection next = null;
+		for (Connection c : connections) {
+			if ((cityTree.contains(c.node1) && !cityTree.contains(c.node2) ) || (!cityTree.contains(c.node1) && cityTree.contains(c.node2))) {
+				next = c;
+			}
+			if (cityTree.size() == 0) {
+				next = c;
+			}
+		}
+		return next;
+	}
+
+	public int numberOfCities(List<Connection> list) {
+		HashSet<String> set = new HashSet<>();
+		for (Connection c : list) {
+			set.add(c.node1);
+			set.add(c.node2);
+		}
+		return set.size();
+	}
+	*/
 	
 	public static void main(String[] args) {
 		MinimumSpanningTree solution = new MinimumSpanningTree();

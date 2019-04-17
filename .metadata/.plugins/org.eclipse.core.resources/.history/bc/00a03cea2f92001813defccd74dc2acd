@@ -1,0 +1,118 @@
+package sentimentReport;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Kaikai Wang
+ */
+public class SentimentReport {
+
+    public static File positive;
+    public static File negative;
+    public static File book;
+
+    //This method will provide the user with information and instructions.
+    public static void main(String[] args) throws FileNotFoundException {
+        intro();
+        while (!positive.exists()) { //requerying user input until file exists for book
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Reenter text file name for the positive: ");
+            String tempPositive = sc.next();
+            System.out.println(tempPositive);
+            if (!tempPositive.contains(".txt")) {
+            	tempPositive = tempPositive + ".txt";
+            }
+            positive = new File(tempPositive);  
+        }
+        while (!negative.exists()) { //requerying user input until file exists for book
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Reenter text file name for the negative: ");
+            String tempNegative = sc.next();
+            System.out.println(tempNegative);
+            if (!tempNegative.contains(".txt")) {
+            	tempNegative = tempNegative + ".txt";
+            }
+            negative = new File(tempNegative);  
+        }
+        while (!book.exists()) { //requerying user input until file exists for book
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Reenter text file name for the book: ");
+            String tempBook = sc.next();
+            System.out.println(tempBook);
+            if (!tempBook.contains(".txt")) {
+                tempBook = tempBook + ".txt";
+            }
+            book = new File(tempBook);  
+        }
+            long startTime = System.currentTimeMillis();
+            BookAnalyzer ba = new BookAnalyzer(positive, negative, book);
+            System.out.println("the book that is being analyzed is: " + book.getName());
+            System.out.println("Total Number of Words in the book is: " + ba.getTotalWordsBook());
+            System.out.println("The total number of positive words in the book: " + ba.getPosWords());
+            System.out.println("The percentage of the total words that are positive words: " + ba.getPosPer());
+            System.out.println("The most commonly occurring positive word is: " + ba.mostPositiveWord()
+                    + "and the number of times it occurs: " + ba.mostPositiveNum());
+            System.out.println("The total number of negative words in the book " + ba.getNegWords());
+            System.out.println("The percentage of the total words that are negative words " + ba.getNegPer());
+            System.out.println("The most commonly occurring negative word is: " + ba.mostNegativeWord() + " and the number of\n"
+                    + "times it occurs: " + ba.mostNegativeNum());
+            System.out.println("The overrall sentiment for this book is: " + ba.sentimentAnalyzed());
+            long endTime = System.currentTimeMillis();
+            System.out.println("The time it took to compelete the analysis in milliseconds is: " + (endTime - startTime));
+        //}
+    }
+
+    public static void intro() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter text file name for the positive words: ");
+        String tempPos = "/Users/renyi/Desktop/综合/meixin/fwdupdatedcodes/posWords.txt";//sc.next();
+        System.out.println(tempPos);
+        if (!tempPos.contains(".txt")) {
+            tempPos = tempPos + ".txt";
+        }
+        positive = new File(tempPos);
+        
+        System.out.println("Enter text file name for the negative words: ");
+        String tempNeg = sc.next();
+        if (!tempNeg.contains(".txt")) {
+            tempNeg = tempNeg + ".txt";
+        }
+        negative = new File(tempNeg);
+        
+        System.out.println("Enter text file name for the book: ");
+        String tempBook0 = sc.next();
+        System.out.println(tempBook0);
+        /*
+        if (!tempBook0.contains(".txt")) {
+            tempBook0 = tempBook0 + ".txt";
+        }
+        */
+        book = new File(tempBook0);
+    }
+
+    public static void getReport(ArrayList<File> booklist) throws FileNotFoundException {
+
+        for (int i = 0; i < booklist.size(); i++) {
+            long startTime = System.currentTimeMillis();
+            book = booklist.get(i);
+            BookAnalyzer ba = new BookAnalyzer(positive, negative, book);
+            System.out.println("the book that is being analyzed is: " + book.getName());
+            System.out.println("Total Number of Words in the book is: " + ba.getTotalWordsBook());
+            System.out.println("The total number of positive words in the book: " + ba.getPosWords());
+            System.out.println("The percentage of the total words that are positive words: " + ba.getPosPer());
+            System.out.println("The most commonly occurring positive word is: " + ba.mostPositiveWord()
+                    + "and the number of times it occurs: " + ba.mostPositiveNum());
+            System.out.println("The total number of negative words in the book " + ba.getNegWords());
+            System.out.println("The percentage of the total words that are negative words " + ba.getNegPer());
+            System.out.println("The most commonly occurring negative word is: " + ba.mostNegativeWord() + " and the number of\n"
+                    + "times it occurs: " + ba.mostNegativeNum());
+            System.out.println("The overrall sentiment for this book is: " + ba.sentimentAnalyzed());
+            long endTime = System.currentTimeMillis();
+            System.out.println("The time it took to compelete the analysis in milliseconds is: " + (endTime - startTime));
+        }
+    }
+}

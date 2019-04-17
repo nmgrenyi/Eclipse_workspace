@@ -10,7 +10,6 @@ class Node {
 		children = new ArrayList<Node>();
 	}
 }
-
 class ReturnType {
 	int numberOfNodes;
 	double sum;
@@ -21,8 +20,35 @@ class ReturnType {
 		this.candidate = candidate;
 	}
 }
-
 public class CompanyTree {
+	public Node getMaxAvgSubTree(Node root) {
+		if (root == null) { return root;}
+		double[] resAve = new double[1];
+		Node[] resNode = new Node[1];
+		ReturnType res = dfs(root, resAve, resNode);
+		return resNode[0];
+	}
+	public ReturnType dfs(Node root, double[] resAve, Node[] resNode) {
+		if (root == null) {return new ReturnType(0, 0, null);}
+		if (root.children.size() == 0) {
+			return new ReturnType(1, root.val, null);
+		}
+		int numberOfNodes = 1;
+		double sum = root.val;
+		for (Node node : root.children) {
+			ReturnType temp = dfs(node, resAve, resNode);
+			numberOfNodes += temp.numberOfNodes;
+			sum += temp.sum;
+		}
+		
+		double curAve = sum / numberOfNodes;
+		if (curAve > resAve[0]) {
+			resAve[0] = curAve;
+			resNode[0] = root;
+		}
+		return new ReturnType(numberOfNodes, sum, null);
+	}
+	/*
 	public Node getMaxAvgSubTree(Node root) {
 		// write your code here
 		if (root == null) {
@@ -59,6 +85,7 @@ public class CompanyTree {
 		}
 		return new ReturnType(numberOfNodes, sum, candidate);
 	}
+	*/
 	
 	public static void main(String[] argc) {
 		CompanyTree mas = new CompanyTree();
