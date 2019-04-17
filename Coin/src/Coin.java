@@ -18,7 +18,6 @@ public class Coin {
 	}
 	public String getName(int amount){
 		
-		
 //		switch(amount){
 //		case 10: return "dime";
 //		default: return "No";
